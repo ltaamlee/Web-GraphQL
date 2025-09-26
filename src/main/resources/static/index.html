@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý sản phẩm</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Danh sách sản phẩm theo giá tăng dần</h1>
+<ul id="product-list"></ul>
+
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: '/graphql',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            query: '{ allProducts { id title price } }'
+        }),
+        success: function(response) {
+            const products = response.data.allProducts;
+            products.forEach(p => {
+                $('#product-list').append(`<li>${p.title} - ${p.price} VND</li>`);
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>
