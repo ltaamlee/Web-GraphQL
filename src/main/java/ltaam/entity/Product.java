@@ -1,38 +1,28 @@
 package ltaam.entity;
 
-import java.util.Set;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
+import lombok.*;
+import java.math.BigDecimal;
 
 @Entity
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private int quantity;
     private String description;
-    private double price;
+    private BigDecimal price;
 
     @ManyToOne
+    @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-        name = "product_category",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private Set<Category> categories;
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
 
 	public Long getId() {
 		return id;
@@ -66,11 +56,11 @@ public class Product {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
@@ -82,16 +72,12 @@ public class Product {
 		this.user = user;
 	}
 
-	public Set<Category> getCategories() {
-		return categories;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
-	}
-
-	public Product() {
-		super();
+	public void setCategory(Category category) {
+		this.category = category;
 	}
     
     

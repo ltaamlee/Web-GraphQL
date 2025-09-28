@@ -1,28 +1,29 @@
 package ltaam.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
 import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
 @Entity
-@Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="[user]")
 public class User {
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fullname;
     private String email;
     private String password;
     private String phone;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Product> products;
+    @ManyToMany
+    @JoinTable(
+        name = "user_category",
+        joinColumns = @JoinColumn(name="user_id"),
+        inverseJoinColumns = @JoinColumn(name="category_id")
+    )
+    private Set<Category> categories;
 
 	public Long getId() {
 		return id;
@@ -64,16 +65,12 @@ public class User {
 		this.phone = phone;
 	}
 
-	public Set<Product> getProducts() {
-		return products;
+	public Set<Category> getCategories() {
+		return categories;
 	}
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
-
-	public User() {
-		super();
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
     
     

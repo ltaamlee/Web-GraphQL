@@ -9,5 +9,5 @@ import ltaam.entity.Product;
 public interface ProductRepository extends JpaRepository<Product, Long>  {
 
 	List<Product> findAllByOrderByPriceAsc();
-    List<Product> findByCategories_Id(Long categoryId);
+    List<Product> findByCategory_Id(Long categoryId);
 }

@@ -1,0 +1,30 @@
+package ltaam.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HomeController {
+
+	@GetMapping("/")
+    public String home() {
+        return "index"; 
+    }
+
+
+    @GetMapping("/users")
+    public String userPage() {
+        return "users"; 
+    }
+
+
+    @GetMapping("/categories")
+    public String categoryPage() {
+        return "categories"; 
+    }
+
+    @GetMapping("/products")
+    public String productPage() {
+        return "products"; 
+    }
+}
